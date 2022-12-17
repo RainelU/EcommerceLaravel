@@ -42,11 +42,15 @@ class OrderController extends Controller
     }
 
     public function postOrderStatusUpdate(Order $order, Request $request){
-    	if($request->input('status') == "1" || $request->input('status') == "2" || $order->status == "6" || $order->status == "100"):
+		date_default_timezone_set('America/Santiago');
+    	if($request->input('status') == "1" || $order->status == "6" || $order->status == "100"):
     		return back();
     	else:
     		$order->status = $request->input('status');
-    		if($request->input('status') == "3" && is_null($order->process_at)):
+    		if($request->input('status') == "2" && is_null($order->paid_at)):
+    			$order->paid_at = date('Y-m-d h:i:s');
+    		endif;
+			if($request->input('status') == "3" && is_null($order->process_at)):
     			$order->process_at = date('Y-m-d h:i:s');
     		endif;
     		if($request->input('status') == "4" && is_null($order->send_at)):
@@ -64,8 +68,6 @@ class OrderController extends Controller
 
     		if($order->save()):
     			$user = $order->getUser;
-    			$data = ['name' => $user->name, 'email' => $user->email, 'status' => $request->input('status'), 'o_number' => $order->o_number];
-    			Mail::to($user->email)->send(new AdminNotifyUserOrderStatusChange($data));
     			return back()->with('message', 'Guardado con éxito.')->with('typealert', 'success');
     		endif;
     	endif;

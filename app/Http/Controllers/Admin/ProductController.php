@@ -121,6 +121,7 @@ class ProductController extends Controller
             
             $product->name = e($request->input('name'));
             $product->category_id = $request->input('category');
+            $product->subcategory_id = $request->input('subcategory') ?? 0;
             if($request->hasFile('img')):
                 $actual_image = json_encode(['path' => $product->file_path, 'final_name' => $product->image]);
                 if(!is_null($product->image)):

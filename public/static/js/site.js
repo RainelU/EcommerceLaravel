@@ -156,7 +156,6 @@ function load_products(section){
 						div += "<div class=\"overlay\">";
 							div += "<div class=\"btns\">";
 								div += "<a href=\""+base+"/product/"+product.id+"/"+product.slug+"\"><i class=\"fas fa-eye\"></i></a>";
-								div += "<a href=\"#\"><i class=\"fas fa-cart-plus\"></i></a>";
 								if(auth == "1"){
 									div += "<a href=\"#\" id=\"favorite_1_"+product.id+"\" onclick=\"add_to_favorites('"+product.id+"', '1'); return false;\"><i class=\"fas fa-heart\"></i></a>";
 								}else {
@@ -344,5 +343,3 @@ function delete_object(e){
 		}
 	});
 }
-
-$('[data-toggle="tooltip"]').tooltip();

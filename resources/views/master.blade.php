@@ -103,11 +103,6 @@
 								</a>
 							</li>
 							<li>
-								<a class="dropdown-item" href="{{ url('/account/favorites') }}">
-									<i class="fas fa-heart"></i> Favoritos
-								</a>
-							</li>
-							<li>
 								<a class="dropdown-item" href="{{ url('/account/edit') }}">
 									<i class="fas fa-address-card"></i> Editar mi perfil
 								</a>
