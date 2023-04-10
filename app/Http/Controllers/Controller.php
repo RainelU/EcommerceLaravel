@@ -2,36 +2,34 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Routing\Controller as BaseController;
-use App\Mail\OrderSendDetails, App\Mail\OrderSendDetailsAdmin;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Config;
 use App\Models\User, App\Http\Models\Order;
-use Mail, DB, Str, Config, Image;
+use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use App\Mail\OrderSendDetails, App\Mail\OrderSendDetailsAdmin;
+
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function getOrderEmailDetails($orderid){
-    	$order = Order::find($orderid);
-    	$data = ['order' => $order];
-    	Mail::to($order->getUser->email)->send(new OrderSendDetails($data));
-    	foreach($this->getAdminsEmails() as $admin):
-    		$data = ['order' => $order, 'name' => $admin->name.' '.$admin->lastname];
-    		Mail::to($admin->email)->send(new OrderSendDetailsAdmin($data));
-    	endforeach;
-    }
-
     public function getAdminsEmails(){
     	return DB::table('users')->where('role', '1')->get();
+    }
+    
+    public function entrarHttp(){
+        return "hola";
     }
 
     public function getProcessOrder($id){
         $order = Order::find($id);
         $order->o_number = $this->getOrderNumbeGenerate();
         $order->status = '1';
-        $order->request_at = date('Y-m-d h:i:s');
+        $order->request_at = date('Y-m-d H:i:s');
         $order->save();
     }
 
@@ -42,28 +40,44 @@ class Controller extends BaseController
     }
 
     public function postFileUpload($field, $request, $thumbnails = null){
+        $data = [];
         $path = date('Y/m/d');
-        $original_name = $request->file($field)->getClientOriginalName();
-        $final_name = Str::slug($request->file($field)->getClientOriginalName().'_'.time()).'.'.trim($request->file($field)->getClientOriginalExtension());
 
-        if($request->$field->storeAs($path, $final_name, 'uploads')):
-            $data = json_encode(['upload' => 'success', 'path' => $path, 'original_name' => $original_name, 'final_name' => $final_name]);
-        else:
-            $data = ['upload' => 'error'];
-        endif;
+        $files = $request->file('img');
 
-        if($thumbnails):
-            $file_path = Config::get('filesystems.disks.uploads.root').'/'.$path.'/'.$final_name;
-            foreach($thumbnails as $thumbnail):
-                $img = Image::make($file_path)->orientate();
-                $img->fit($thumbnail[0], $thumbnail[1], function($constraint){
-                    $constraint->aspectRatio();
-                });
-                $img->save(Config::get('filesystems.disks.uploads.root').'/'.$path.'/'.$thumbnail[2].'_'.$final_name, 75);
-            endforeach;
-        endif;
+        if(!File::isDirectory('uploads/'.$path)){
+            File::makeDirectory('uploads/'.$path, 0775, true); //creates directory
+        }
 
-        return $data;
+        if(count($files) > 0){
+            foreach($files as $file){
+                $original_name = $file->getClientOriginalName();
+                $final_name = Str::slug($file->getClientOriginalName().'_'.time()).'.'.trim($file->getClientOriginalExtension());
+            
+                if($file->storeAs($path, $final_name, 'uploads')):
+                    $data[] = json_encode(['upload' => 'success', 'path' => $path, 'original_name' => $original_name, 'final_name' => $final_name]);
+                endif;
+    
+                if($thumbnails):
+                    try {
+                        $file_path = Config::get('filesystems.disks.uploads.root').'/'.$path.'/'.$final_name;
+                        foreach($thumbnails as $thumbnail):
+                            $img = Image::make($file_path)->orientate();
+                            $img->fit($thumbnail[0], $thumbnail[1], function($constraint){
+                                $constraint->aspectRatio();
+                            });
+                            $img->save(Config::get('filesystems.disks.uploads.root').'/'.$path.'/'.$thumbnail[2].'_'.$final_name, 75);
+                        endforeach;
+                    } catch (\Throwable $th) {
+                        dd($th);
+                    }
+                endif;
+            }
+            return $data;
+        }else{
+            return ['upload' => 'error'];
+        }
+
     }
 
     public function getFileDelete($disk, $file, $thumbnails = null){

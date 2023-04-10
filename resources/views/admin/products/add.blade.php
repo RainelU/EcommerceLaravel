@@ -117,7 +117,7 @@
 				<div class="col-md-3">
 					<label for="name">Imagen Destacada:</label>
 					<div class="form-file">
-					{!! Form::file('img', ['class' => 'form-file-input', 'id' => 'customFile', 'accept' => 'image/*']) !!}
+					{!! Form::file('img[]', ['class' => 'form-file-input', 'id' => 'customFile', 'accept' => 'image/*', 'multiple' => true]) !!}
 					<label class="form-file-label" for="customFile">
 						<span class="form-file-text">Archivo...</span>
 						<span class="form-file-button">Buscar</span>

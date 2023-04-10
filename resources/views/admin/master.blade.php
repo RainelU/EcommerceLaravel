@@ -12,8 +12,11 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
 	<link rel="stylesheet" href="{{ url('/static/css/admin.css?v='.time()) }}">
 	<link rel="stylesheet" href="{{ url('/static/css/mdalert.css') }}">
+	<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+	<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
 	<link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
 	<script src="https://kit.fontawesome.com/b0d8aefb17.js" crossorigin="anonymous"></script>
+
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
  
@@ -21,11 +24,14 @@
 	<script src="{{ url('/static/libs/ckeditor/ckeditor.js') }}"></script>
 	<script src="{{ url('/static/js/mdalert.js') }}"></script>
 	<script src="{{ url('/static/js/admin.js?v='.time()) }}"></script>
+	<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
 	<script>
 		$(document).ready(function(){
 			$('[data-toggle="tooltip"]').tooltip()
+			$('.slick-slider').slick({dots: true, infinite: true, autoplay: true, autoplaySpeed: 2000});
 		});
+
 	</script>
 </head>
 <body>

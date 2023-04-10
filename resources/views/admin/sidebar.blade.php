@@ -1,10 +1,7 @@
 <div class="sidebar shadow">
 	<div class="section-top">
-		<button class="btn btn-block btm-sm btn-danger">
-		<i class="fas fa-sign-out-alt"></i> Cerrar Sesión
-		</button>
 		<div class="logo">
-			<img src="{{ url('static/images/logo.png') }}" class="img-fluid">
+			<img src="{{ url('static/images/logo.png') }}" class="img-fluid w-100">
 		</div>
 
 		<div class="user">
@@ -53,12 +50,7 @@
 			
 			{{-- <li>
 				<a href="{{ url('/admin/repairs/all') }}" class="lk-user_list lk-user_view lk-user_permissions"><i class="fas fa-tools"></i> Reparaciones</a>
-			</li> --}}
-
-			<li>
-				<a href="{{ url('/admin/settings') }}" class="lk-settings"><i class="fas fa-cogs"></i> Configuraciones</a>
-			</li>
-			
+			</li> --}}			
 			
 		</ul>
 	</div>

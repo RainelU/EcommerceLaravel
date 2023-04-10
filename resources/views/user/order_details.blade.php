@@ -10,7 +10,11 @@
 				<div class="col-md-9">
 					<div class="panel">
 						<div class="header">
-							<h2 class="title"><i class="fas fa-shopping-cart"></i> Detalle de su orden #{{ $order->o_number }}</h2>
+							<h2 class="title">
+								<i class="fas fa-shopping-cart"></i> 
+								Detalle de su orden #{{ $order->o_number }} -
+								<b> ESTADO: {{ strtoupper(getOrderStatus($order->status)) }} </b>
+							</h2>
 						</div>
 						<div class="inside">
 							<table class="table table-striped align-middle table-hover">
@@ -35,31 +39,31 @@
 												<div class="price_discount">
 													Precio: 
 													@if($item->discount_status == "1")
-													<span class="price_initial">{{ config('madecms.currency').$item->price_initial }}</span> / 
+													<span class="price_initial">{{ config('madecms.currency').number_format($item->price_initial, 0, '', '.')}}</span> / 
 													@endif
-													<span class="price_unit">{{ config('madecms.currency').$item->price_unit }}  @if($item->discount_status == "1") ({{ $item->discount }}% de descuento) @endif</span>
+													<span class="price_unit">{{ config('madecms.currency').number_format($item->price_unit, 0, '', '.') }}  @if($item->discount_status == "1") ({{ $item->discount }}% de descuento) @endif</span>
 												</div>
 											</a>
 										</td>
 										<td>{{ $item->quantity }}</td>
-										<td><strong>CLP {{ $item->total }}</strong></td>
+										<td><strong>CLP {{ number_format($item->total, 0, '', '.') }}</strong></td>
 									</tr>
 									@endforeach
 
 									<tr>
 										<td colspan="2"></td>
 										<td><strong>Subtotal:</strong></td>
-										<td><strong>CLP {{ $order->subtotal }}</strong></td>
+										<td><strong>CLP {{ number_format($order->subtotal, 0, '', '.') }}</strong></td>
 									</tr>
 									<tr>
 										<td colspan="2"></td>
 										<td><strong>Precio de envió:</strong></td>
-										<td><strong>CLP {{ $order->delivery }}</strong></td>
+										<td><strong>CLP {{ number_format($order->delivery, 0, '', '.') }}</strong></td>
 									</tr>
 									<tr>
 										<td colspan="2"></td>
 										<td><strong>Total de la orden:</strong></td>
-										<td><strong>CLP {{ $order->total }}</strong></td>
+										<td><strong>CLP {{ number_format($order->total, 0, '', '.') }}</strong></td>
 									</tr>
 								</tbody>
 							</table>
@@ -88,10 +92,6 @@
 								<a href="#" class="sl @if($order->o_type == "0") active @endif">
 									<i class="fas fa-motorcycle"></i> Domicilio
 								</a>
-								
-								<a href="#" class="sl @if($order->o_type == "1") active @endif">
-									<i class="fas fa-car-side"></i> TO GO
-								</a>
 							</div>
 						</div>
 					</div>
@@ -102,9 +102,8 @@
 						</div>
 						<div class="inside">
 							<div class="payments_methods">
-								
-								<a href="#" class="w-100 active" id="payment_method_cash" data-payment-method-id="0">
-									<i class="fas fa-cash-register"></i> {{ getPaymentsMethods($order->payment_method) }}
+								<a href="#" class="btn-payment-method w-100 active" id="payment_webpay" data-payment-method-id="0">
+									<i class="fas fa-credit-card"></i> Pago en WebPay
 								</a>
 							</div>
 						</div>

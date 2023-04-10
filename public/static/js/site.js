@@ -163,16 +163,25 @@ function load_products(section){
 								}
 							div += "</div>";
 						div += "</div>"
-						div += "<img src=\""+base+"/uploads/"+product.file_path+"/"+product.image+"\">";
+						div += "<div class=\"slick-slider\">";
+							if(product.get_gallery.length > 0){
+								$.each(product.get_gallery, function (i, v) { 
+									div += `
+										<img src="${base + '/uploads/' + v.file_path + '/' + v.file_name}" style="width: 100%;height:150px;">
+									`
+								});
+							}
+						div += "</div>";
 					div += "</div>";
 					div += "<a href=\""+base+"/product/"+product.id+"/"+product.slug+"\" title=\""+product.name+"\">";
 						div += "<div class=\"title\">"+product.name+"</div>";
-						div += "<div class=\"price\">"+currency+product.price+"</div>";
+						div += "<div class=\"price\">"+currency+' '+ new Intl.NumberFormat('es-CL').format(product.price) +"</div>";
 						div += "<div class=\"options\"></div>";
 					div += "</a>"
 				div += "</div>";
 				products_list.innerHTML += div;
 			});
+			$('.slick-slider').slick({dots: true, infinite: true, autoplay: true, autoplaySpeed: 2000});
 
 			if(auth == "1"){
 				mark_user_favorites(products_list_ids_temp);

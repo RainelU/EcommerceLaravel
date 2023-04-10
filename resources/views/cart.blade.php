@@ -66,24 +66,24 @@
 											{!! Form::close() !!}
 											</div>
 										</td>
-										<td><strong>CLP {{ $item->total }}</strong></td>
+										<td><strong>CLP {{ number_Format($item->total, 0, '', '.') }}</strong></td>
 									</tr>
 									@endforeach
 
 									<tr>
 										<td colspan="3"></td>
 										<td><strong>Subtotal:</strong></td>
-										<td><strong>CLP {{ $order->getSubtotal() }}</strong></td>
+										<td><strong>CLP {{ number_format($order->getSubtotal(), 0, '', '.') }}</strong></td>
 									</tr>
 									<tr>
 										<td colspan="3"></td>
-										<td><strong>Precio de envió:</strong></td>
-										<td><strong>CLP {{ $shipping }}</strong></td>
+										<td><strong>Precio de envío:</strong></td>
+										<td><strong>CLP {{ number_format($shipping, 0, '', '.') }}</strong></td>
 									</tr>
 									<tr>
 										<td colspan="3"></td>
 										<td><strong>Total de la orden:</strong></td>
-										<td><strong>CLP {{ $order->total }}</strong></td>
+										<td><strong>CLP {{ number_format($order->total, 0, '', '.') }}</strong></td>
 									</tr>
 								</tbody>
 							</table>
@@ -102,81 +102,61 @@
 						<div class="inside">
 							@if($order->o_type == "0")
 								@if(!is_null(Auth::user()->getAddressDefault))
-								<p style="margin-bottom: 2px;"><strong>Estado:</strong> {{ Auth::user()->getAddressDefault->getState->name }}</p>
-								<p style="margin-bottom: 2px;"><strong>Ciudad:</strong> {{ Auth::user()->getAddressDefault->getCity->name }}</p>
-								<p style="margin-bottom: 2px;"><strong>Dirección:</strong> {{ kvfj(Auth::user()->getAddressDefault->addr_info, 'add1') }}, {{ kvfj(Auth::user()->getAddressDefault->addr_info, 'add2') }}, {{ kvfj(Auth::user()->getAddressDefault->addr_info, 'add3') }}</p>
+									<p style="margin-bottom: 2px;"><strong>Estado:</strong> {{ Auth::user()->getAddressDefault->getState->name }}</p>
+									<p style="margin-bottom: 2px;"><strong>Ciudad:</strong> {{ Auth::user()->getAddressDefault->getCity->name }}</p>
+									<p style="margin-bottom: 2px;"><strong>Dirección:</strong> {{ kvfj(Auth::user()->getAddressDefault->addr_info, 'add1') }}, {{ kvfj(Auth::user()->getAddressDefault->addr_info, 'add2') }}, {{ kvfj(Auth::user()->getAddressDefault->addr_info, 'add3') }}</p>
 
-								<p style="margin-bottom: 2px;"><strong>Referencia:</strong> {{ kvfj(Auth::user()->getAddressDefault->addr_info, 'add4') }}</p>
+									<p style="margin-bottom: 2px;"><strong>Referencia:</strong> {{ kvfj(Auth::user()->getAddressDefault->addr_info, 'add4') }}</p>
 
-								<p><a href="{{ url('/account/address') }}" class="btn btn-dark mtop16">Cambiar Dirección</a></p>
+									<p><a href="{{ url('/account/address') }}" class="btn btn-dark mtop16">Cambiar Dirección</a></p>
 								@else
-								<p>Su usuario no tiene direcciones registradas</p>
-								<p><a href="{{ url('/account/address') }}" class="btn btn-dark mtop16">Agregar Dirección</a></p>
+									<p>Su usuario no tiene direcciones registradas, debe agregar una dirección para seguir con su compra</p>
+									<p><a href="{{ url('/account/address') }}" class="btn btn-dark mtop16">Agregar Dirección</a></p>
 								@endif
 							@endif
 
 							@if(config('cms.to_go') == "1")
-							<div class="mcswitch">
-								<a href="{{ url('/cart/'.$order->id.'/type/0') }}" class="sl @if($order->o_type == "0") active @endif">
-									<i class="fas fa-motorcycle"></i> Domicilio
-								</a>
-								
-								<a href="{{ url('/cart/'.$order->id.'/type/1') }}" class="sl @if($order->o_type == "1") active @endif">
-									<i class="fas fa-car-side"></i> TO GO
-								</a>
-							</div>
+								<div class="mcswitch">
+									<a href="{{ url('/cart/'.$order->id.'/type/0') }}" class="sl @if($order->o_type == "0") active @endif">
+										<i class="fas fa-motorcycle"></i> Domicilio
+									</a>
+								</div>
 							@endif
 						</div>
 					</div>
-
-					<div class="panel mtop16">
-						<div class="header">
-							<h2 class="title"><i class="fas fa-credit-card"></i> Método de pago</h2>
-						</div>
-						<div class="inside">
-							<div class="payments_methods">
-								@if(config('cms.payment_method_cash') == "1")
-									<a href="#" class="btn-payment-method w-100" id="payment_method_cash" data-payment-method-id="0">
-										<i class="fas fa-cash-register"></i> Pagar en efectivo
-									</a>
-								@endif
-
-								@if(config('cms.payment_method_transfer') == "1")
-									<a href="#" class="btn-payment-method w-100" id="payment_method_transfer" data-payment-method-id="1">
-										<i class="fas fa-comment-dollar"></i> Transferencia o deposito
-									</a>
-								@endif
-
-								@if(config('cms.payment_method_paypal') == "1")
-									<a href="#" class="btn-payment-method w-100" id="payment_method_paypal" data-payment-method-id="2">
-										<i class="fab fa-paypal"></i> Pagar con Paypal
-									</a>
-								@endif
-
-								@if(config('cms.payment_method_credit_card') == "1")
-									<a href="#" class="btn-payment-method w-100" id="payment_method_credit_card" data-payment-method-id="3">
-										<i class="fas fa-credit-card"></i> Tarjeta de crédito
-									</a>
-								@endif
+					
+					@if($order->o_type == "0")
+						@if(!is_null(Auth::user()->getAddressDefault))
+							<div class="panel mtop16">
+								<div class="header">
+									<h2 class="title"><i class="fas fa-credit-card"></i> Método de pago</h2>
+								</div>
+								<div class="inside">
+									<div class="payments_methods">
+										<a href="#" class="btn-payment-method w-100" id="payment_webpay" data-payment-method-id="0">
+											<i class="fas fa-credit-card"></i> Pagar en WebPay
+										</a>
+									</div>
+								</div>
 							</div>
-						</div>
-					</div>
 
-					<div class="panel mtop16">
-						<div class="header">
-							<h2 class="title"><i class="far fa-envelope-open"></i> Más</h2>
-						</div>
-						<div class="inside">
-							<label for="order_msg">Enviar comentario:</label>
-							{!! Form::textarea('order_msg', null, ['class' => 'form-control', 'rows' => 3]) !!}
-						</div>
-					</div>
+							<div class="panel mtop16">
+								<div class="header">
+									<h2 class="title"><i class="far fa-envelope-open"></i> Más</h2>
+								</div>
+								<div class="inside">
+									<label for="order_msg">Enviar comentario:</label>
+									{!! Form::textarea('order_msg', null, ['class' => 'form-control', 'rows' => 3]) !!}
+								</div>
+							</div>
 
-					<div class="panel mtop16">
-						<div class="inside">
-							{!! Form::submit('Completar orden', ['class' => 'btn btn-success w-100 disabled', 'id' => 'pay_btn_complete']) !!}
-						</div>
-					</div>
+							<div class="panel mtop16">
+								<div class="inside">
+									{!! Form::submit('Completar orden', ['class' => 'btn btn-success w-100 disabled', 'id' => 'pay_btn_complete']) !!}
+								</div>
+							</div>
+						@endif
+					@endif
 				</div>
 				
 			</div>

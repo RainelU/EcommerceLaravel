@@ -38,7 +38,7 @@ class CoverageController extends Controller
     		$coverage->ctype = '0';
     		$coverage->state_id = '0';
     		$coverage->name = e($request->input('name'));
-    		$coverage->price ='0';
+    		$coverage->price = $request->input('price');
     		$coverage->days = $request->input('days');
 
     		if($coverage->save()):
@@ -70,6 +70,7 @@ class CoverageController extends Controller
             $coverage->status = $request->input('status');
             $coverage->name = e($request->input('name'));
             $coverage->days = $request->input('days');
+    		$coverage->price = $request->input('price');
 
             if($coverage->save()):
                 return back()->with('message', 'Actualizado con éxito.')->with('typealert', 'success');

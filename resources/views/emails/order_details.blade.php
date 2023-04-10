@@ -96,6 +96,6 @@
 <p>Se reserva el derecho de aceptar o rechazar una orden, sin previo aviso, si su orden se marca como rechazada y ha seleccionado un método de pago como transferencia o tarjeta de crédito, su dinero será reembolsado de forma automática.</p>
 
 @if($order->payment_method == "0")
-<p>Ha seleccionado pagar en efectivo en su Domicio.</p>
+<p>Ha seleccionado pagar en Webpay.</p>
 @endif
 @stop

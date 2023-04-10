@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-    <h2>Hola {{ $name }}, bienvenido a Nibble</h2>
+    <h2>Hola {{ $name }}, bienvenido a Bne Computers</h2>
     <p>Por faor confirma tu correo electronico</p>
     <p>Para ello simplemente debes hacer click en el siguiente enlace</p>
 

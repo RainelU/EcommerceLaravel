@@ -70,12 +70,25 @@
 					@foreach($products as $p)
 					<tr>
 						<td width="50">{{ $p->id }}</td>
-						<td width="300">
-							@if($p->file_path)
-								<img style="height:200px;width:100%;" src="{{ url('/uploads/'.$p->file_path.'/'.$p->image) }}" alt="">
-							@else
-								<img style="height:200px;width:100%;" src="{{ url('/uploads/'.$p->image) }}" alt="">
-							@endif
+						<td width="300" class="pleft0">
+							<div class="slick-slider">
+								@if(count($p->getGallery) > 0)
+									@foreach($p->getGallery as $gallery)
+										<div>
+											<img src="{{ url('/uploads/'.$gallery->file_path.'/'.$gallery->file_name) }}" style="height: 300px; width: 300px;">
+										</div>
+										@php
+											break;
+										@endphp
+									@endforeach
+								@else
+									<div>
+										<h3>
+											El producto no posee imágenes
+										</h3>
+									</div>
+								@endif
+							</div>
 						</td>
 						<td>
 							<p style="margin-bottom: 0px;">{{ $p->name }} @if($p->status == "0") <i class="fas fa-eraser" data-toggle="tooltip" data-placement="top" title="Estado: Borrador"></i> @endif</p>

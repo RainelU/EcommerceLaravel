@@ -43,12 +43,12 @@ return [
         ],
         'uploads' => [
             'driver' => 'local',
-            'root' => 'C:\xampp\htdocs\madecms\public\uploads',
+            'root' => 'uploads',
             'visibility' => 'public',
         ],
         'uploads_user' => [
             'driver' => 'local',
-            'root' => 'C:\xampp\htdocs\madecms\public\uploads',
+            'root' => 'uploads',
         ],
 
         's3' => [

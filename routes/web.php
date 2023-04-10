@@ -10,12 +10,14 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('entrar_http', 'Controller@entrarHttp');
 Route::get('/', 'ContentController@getHome')->name('home');
 Route::get('/about', 'AboutController@main')->name('about');
 Route::get('/contact', 'ContactController@main')->name('contact');
 Route::post('/contact/add', 'ContactController@postContactAdd')->name('contact_add');
 
+// WEBPAY
+Route::get('/webpayReturn', 'CartController@confirmarPago')->name('confirmarPago');
 
 // Module Cart
 Route::get('/cart', 'CartController@getCart')->name('cart');

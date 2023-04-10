@@ -36,6 +36,14 @@
 						{!! Form::number('days', 0, ['class' => 'form-control', 'min' => '0', 'step' => 'any']) !!}
 					</div>
 
+					<label for="name" class="mtop16">Precio estándar para envíos a esa zona:</label>
+					<div class="input-group">
+						<span class="input-group-text" id="basic-addon1">
+							<i class="far fa-keyboard"></i>
+						</span>
+						{!! Form::number('price', 0, ['class' => 'form-control', 'min' => '0', 'step' => 'any']) !!}
+					</div>
+
 					{!! Form::submit('Guardar', ['class' => 'btn btn-success mtop16']) !!}
 					{!! Form::close() !!}
 					
@@ -57,6 +65,7 @@
 								<td><strong>Estatus</strong></td>
 								<td><strong>Estado / Departamento</strong></td>
 								<td><strong>Entrega estimada</strong></td>
+								<td><strong>Precio de envío</strong></td>
 								<td></td>
 							</tr>
 						</thead>
@@ -66,6 +75,7 @@
 								<td>{{ getCoverageStatus($state->status) }}</td>
 								<td>{{ $state->name }}</td>
 								<td>{{ $state->days }} días</td>
+								<td>{{ $state->price }}</td>
 								<td>
 									<div class="opts">
 										<a href="{{ url('/admin/coverage/'.$state->id.'/edit') }}" data-toggle="tooltip" data-placement="top" class="edit" title="Editar">

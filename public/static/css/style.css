@@ -580,7 +580,7 @@ nav .navbar-nav li.link-user a:hover {
   z-index: 4;
 }
 .products_list .product:hover .image img {
-  transform: scale(1.1);
+  transform: scale(1);
 }
 .products_list .product:hover .image .overlay {
   display: flex;

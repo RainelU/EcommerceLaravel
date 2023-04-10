@@ -12,4 +12,5 @@ class PGallery extends Model
 	protected $dates = ['deleted_at'];
 	protected $table = 'product_gallery';
 	protected $hidden = ['created_at', 'updated_at'];
+	protected $fillable = ['product_id', 'file_path', 'file_name'];
 }

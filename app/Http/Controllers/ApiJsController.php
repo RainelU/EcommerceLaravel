@@ -16,18 +16,18 @@ class ApiJsController extends Controller
         $items_x_page_random = Config::get('madecms.products_per_page_random');
     	switch ($section):
     		case 'home':
-    			$products = Product::where('status', 1)->inRandomOrder()->paginate($items_x_page_random)->all();
+    			$products = Product::where('status', 1)->with('getGallery')->inRandomOrder()->paginate($items_x_page_random)->all();
     			break;
 
             case 'store':
-                $products = Product::where('status', 1)->orderBy('id', 'Desc')->paginate($items_x_page)->all();
+                $products = Product::where('status', 1)->with('getGallery')->orderBy('id', 'Desc')->paginate($items_x_page)->all();
                 break;
             case 'store_category':
                 $products = $this->getProductsCategory($request->get('object_id'), $items_x_page)->all();
                 break;
     		
     		default:
-    			$products = Product::where('status', 1)->inRandomOrder()->paginate($items_x_page_random)->all();
+    			$products = Product::where('status', 1)->with('getGallery')->inRandomOrder()->paginate($items_x_page_random)->all();
     			break;
     	endswitch;
 
@@ -38,9 +38,9 @@ class ApiJsController extends Controller
         
         $category = Category::find($id);
         if($category->parent == "0"):
-            $query = Product::where('status', 1)->where('category_id', $id)->orderBy('id', 'Desc')->paginate(15);
+            $query = Product::where('status', 1)->with('getGallery')->where('category_id', $id)->orderBy('id', 'Desc')->paginate(15);
         else:
-            $query = Product::where('status', 1)->where('subcategory_id', $id)->orderBy('id', 'Desc')->paginate(15);
+            $query = Product::where('status', 1)->with('getGallery')->where('subcategory_id', $id)->orderBy('id', 'Desc')->paginate(15);
         endif;
         return $query;
     }

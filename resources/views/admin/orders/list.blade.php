@@ -65,7 +65,14 @@
 								<td>
 									{{ $order->o_number }}
 								</td>
-								<td>{{ $order->getUser->name }} @if($order->getUser->lastname) {{ $order->getUser->lastname }} @endif</td>
+								<td> 
+									@if($order->getUser) 
+										{{ $order->getUser->name }} 
+										@if($order->getUser->lastname) 
+											{{ $order->getUser->lastname }} 
+										@endif
+									@endif
+								</td>
 								<td>{{ getOrderType($order->o_type) }}</td>
 								<td>{{ $order->request_at }}</td>
 								<td>{{ number_format($order->total, 0, ',', '.') }}</td>

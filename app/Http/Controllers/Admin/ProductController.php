@@ -72,12 +72,29 @@ class ProductController extends Controller
             $product->category_id = $request->input('category');
             $product->subcategory_id = $request->input('subcategory');
             $product->file_path = date("Y/m/d");
-            $rp = json_decode($this->postFileUpload('img', $request, [[256,256,'256x256']]));
-            $product->image = $rp->final_name;
             $product->in_discount = $request->input('indiscount');
             $product->discount = $request->input('discount');
             $product->content = e($request->input('content'));
+            $product->image = "Vacío";
             if($product->save()):
+                if($request->hasFile('img')):
+                    $actual_image = json_encode(['path' => $product->file_path, 'final_name' => $product->image]);
+                    if(!is_null($product->image)):
+                        $this->getFileDelete('uploads', $actual_image);
+                    endif;
+                    $rp = $this->postFileUpload('img', $request, [[256,256,'256x256']]);
+                    if(count($rp) > 0){
+                        PGallery::where('product_id', $product->id)->delete();
+                        foreach($rp as $p){
+                            $decode = json_decode($p);
+                            PGallery::create([
+                                'product_id' => $product->id,
+                                'file_path' => $decode->path,
+                                'file_name' => $decode->final_name
+                            ]);
+                        }
+                    }
+                endif;
                 return redirect('/admin/products/1')->with('message', 'Guardado con éxito.')->with('typealert', 'success');
             else:
                 echo "<pre>";
@@ -127,9 +144,18 @@ class ProductController extends Controller
                 if(!is_null($product->image)):
                     $this->getFileDelete('uploads', $actual_image);
                 endif;
-                echo "<pre>";
-                $rp = json_decode($this->postFileUpload('img', $request, [[256,256,'256x256']]));
-                $product->image = $rp->final_name;
+                $rp = $this->postFileUpload('img', $request, [[256,256,'256x256']]);
+                if(count($rp) > 0){
+                    PGallery::where('product_id', $product->id)->delete();
+                    foreach($rp as $p){
+                        $decode = json_decode($p);
+                        PGallery::create([
+                            'product_id' => $id,
+                            'file_path' => $decode->path,
+                            'file_name' => $decode->final_name
+                        ]);
+                    }
+                }
             endif;
             $product->price = $request->input('price_edit');
             $product->quantity = $request->input('quantity');

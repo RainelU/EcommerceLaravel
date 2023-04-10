@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Models\Order, App\Http\Models\OrderItem, App\Http\Models\Product, App\Http\Models\Inventory, App\Http\Models\Variant, App\Http\Models\Coverage;
 use Auth, Config;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use Transbank\Webpay\WebpayPlus\Transaction;
+use App\Http\Models\Order, App\Http\Models\OrderItem, App\Http\Models\Product, App\Http\Models\Inventory, App\Http\Models\Variant, App\Http\Models\Coverage;
+use Exception;
+
 class CartController extends Controller
 {
     public function __Construct(){
@@ -43,36 +47,70 @@ class CartController extends Controller
 
     public function postCart(Request $request){
         $order = $this->getUserOrder();
-        $order = Order::find($order->id);
-        if($request->input('payment_method') == "0"):
-            $this->getProcessOrder($order->id);
-        endif;
+        $order->session_id = Str::uuid();
         $order->payment_method = $request->input('payment_method');
         $order->user_comment = $request->input('order_msg');
+        $order->save();
+
+        $url = self::startTransaction($order);
+        return redirect($url);
         
-        if($order->save()):
-            $orderItem = OrderItem::where('order_id', $order->id)->get();
-            $oitem = $orderItem->toArray();
-            
-
-            foreach($oitem as $oi){
-
-                $product = Product::find($oi['product_id']);
-
-                $product->quantity = ($product->quantity - $oi['quantity']);
-                $product->save();
-            }
-
-            if($order->payment_method == "0" && $order->status == "1"):
-                $this->getOrderEmailDetails($order->id);
-                return redirect('account/history/order/'.$order->id);
-            else:
-                return redirect('account/history/order/'.$order->id);
-            endif;
-        endif;
     }
 
+    public function startTransaction($nueva_compra){
+        $transaccion = (new Transaction)->create(
+            $nueva_compra->id,
+            $nueva_compra->session_id,
+            number_format($nueva_compra->total, 0, '', ''),
+            route('confirmarPago')
+        );
+        $url = $transaccion->getUrl().'?token_ws='.$transaccion->getToken();
+        return $url;
+    }
+
+    public function confirmarPago(Request $request){
+        try{
+            if(!$request->get('token_ws'))
+                return redirect('/');
+        
+            $confirmacion = (new Transaction)->commit($request->get('token_ws'));
+            
+            $compra = Order::where('id', $confirmacion->buyOrder)->first();
+
+            $this->getProcessOrder($compra->id);
+
+            if($confirmacion->isApproved()){
+                $compra->status = 2;
+                $compra->paid_at = date('Y-m-d H:i:s');
+                $compra->save();
+                $mensaje = "PAGO REALIZADO CORRECTAMENTE";
+
+                if($compra->save()):
+                    $orderItem = OrderItem::where('order_id', $compra->id)->get();
+                    $oitem = $orderItem->toArray();
+                    
     
+                    foreach($oitem as $oi){
+                        $product = Product::find($oi['product_id']);
+    
+                        $product->quantity = ($product->quantity - $oi['quantity']);
+                        $product->save();
+                    }
+                endif;
+
+                return redirect('/account/history/order/'.$compra->id)->with('messageToastr', $mensaje);
+            }else{
+                $compra->status = 100;
+                $compra->rejected_at = date('Y-m-d H:i:s');
+                $compra->save();
+                $mensaje = "PAGO RECHAZADO, POR FAVOR VERIFIQUE SU BANCO";
+                return redirect('/')->with('errorToastr', $mensaje);
+            }
+
+        }catch(Exception $e){
+            return redirect('/')->with('errorToastr', "El pago no ha sido procesado, realice nuevamente la compra.");
+        }
+    }
 
     public function getUserOrder(){
     	$order = Order::where('status', '0')->where('user_id', Auth::id())->count();

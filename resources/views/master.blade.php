@@ -20,6 +20,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
 	<link rel="stylesheet" href="{{ url('/static/css/style.css?v='.time()) }}">
 	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
 	<script src="https://kit.fontawesome.com/b0d8aefb17.js" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
@@ -29,8 +30,12 @@
 	<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
 	<script src="{{ url('/static/js/mdslider.js?v='.time()) }}"></script>
+	<script>
+		urlImagenes = "{{  url('/uploads') }}"
+	</script>
 	<script src="{{ url('/static/js/site.js?v='.time()) }}"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 </head>
 <body>
 
@@ -48,7 +53,7 @@
 
 	<nav class="navbar navbar-expand-lg shadow">
 		<div class="container">
-			<a class="navbar-brand" href="{{ url('/') }}"><img src="{{ url('/static/images/madecms_logo.png') }}"></a>
+			<a class="navbar-brand" href="{{ url('/') }}"><img src="{{ url('/static/images/bne_computers.png') }}"></a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigationMain" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 				<i class="fas fa-bars"></i>
 			</button>
@@ -120,9 +125,6 @@
 		</div>
 	</nav>
 
-
-
-
 	@if(Session::has('message'))
 		<div class="container">           
 		<div class="alert alert-{{ Session::get('typealert') }} mtop16" style="display:block; margin-bottom: 16px;"> 
@@ -148,4 +150,43 @@
 		</div>
 
 </body>
+<script>
+	@if(Session::has('messageToastr'))
+	toastr.options =
+	{
+	  "closeButton" : true,
+	  "progressBar" : true
+	}
+		  toastr.success("{{ session('messageToastr') }}");
+	@endif
+  
+	@if(Session::has('errorToastr'))
+	toastr.options =
+	{
+	  "closeButton" : true,
+	  "progressBar" : true
+	}
+		  toastr.error("{{ session('errorToastr') }}");
+	@endif
+  
+	@if(Session::has('infoToastr'))
+	toastr.options =
+	{
+	  "closeButton" : true,
+	  "progressBar" : true
+	}
+		  toastr.info("{{ session('infoToastr') }}");
+	@endif
+  
+	@if(Session::has('warningToastr'))
+	toastr.options =
+	{
+	  "closeButton" : true,
+	  "progressBar" : true
+	}
+		  toastr.warning("{{ session('warningToastr') }}");
+	@endif
+
+	$('.slick-slider').slick({dots: true, infinite: true, autoplay: true, autoplaySpeed: 2000});
+  </script>
 </html>

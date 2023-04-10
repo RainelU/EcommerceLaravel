@@ -48,22 +48,22 @@ class OrderController extends Controller
     	else:
     		$order->status = $request->input('status');
     		if($request->input('status') == "2" && is_null($order->paid_at)):
-    			$order->paid_at = date('Y-m-d h:i:s');
+    			$order->paid_at = date('Y-m-d H:i:s');
     		endif;
 			if($request->input('status') == "3" && is_null($order->process_at)):
-    			$order->process_at = date('Y-m-d h:i:s');
+    			$order->process_at = date('Y-m-d H:i:s');
     		endif;
     		if($request->input('status') == "4" && is_null($order->send_at)):
-    			$order->send_at = date('Y-m-d h:i:s');
+    			$order->send_at = date('Y-m-d H:i:s');
     		endif;
     		if($request->input('status') == "5" && is_null($order->send_at)):
-    			$order->send_at = date('Y-m-d h:i:s');
+    			$order->send_at = date('Y-m-d H:i:s');
     		endif;
     		if($request->input('status') == "6" && is_null($order->delivery_at)):
-    			$order->delivery_at = date('Y-m-d h:i:s');
+    			$order->delivery_at = date('Y-m-d H:i:s');
     		endif;
     		if($request->input('status') == "100" && is_null($order->rejected_at)):
-    			$order->rejected_at = date('Y-m-d h:i:s');
+    			$order->rejected_at = date('Y-m-d H:i:s');
     		endif;
 
     		if($order->save()):

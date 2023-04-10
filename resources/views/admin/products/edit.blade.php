@@ -114,7 +114,7 @@
 						<div class="col-md-3">
 							<label for="name">Imagen Destacada:</label>
 							<div class="form-file">
-							{!! Form::file('img', ['class' => 'form-file-input', 'id' => 'customFile', 'accept' => 'image/*']) !!}
+							{!! Form::file('img[]', ['class' => 'form-file-input', 'id' => 'customFile', 'accept' => 'image/*', 'multiple' => true]) !!}
 							<label class="form-file-label" for="customFile">
 								<span class="form-file-text">Choose file...</span>
 								<span class="form-file-button">Browse</span>
@@ -164,8 +164,20 @@
 			<div class="panel shadow">
 				<div class="header">
 					<h2 class="title"><i class="far fa-image"></i> Imagen Destacada</h2>
-					<div class="inside">
-						<img src="{{ url('/uploads/'.$p->file_path.'/'.$p->image) }}" class="img-fluid">
+					<div class="slick-slider">
+						@if(count($p->getGallery) > 0)
+							@foreach($p->getGallery as $gallery)
+								<div>
+									<img src="{{ url('/uploads/'.$gallery->file_path.'/'.$gallery->file_name) }}" style="height: 300px; width: 100%;">
+								</div>
+							@endforeach
+						@else
+							<div>
+								<h3>
+									El producto no posee imágenes
+								</h3>
+							</div>
+						@endif
 					</div>
 				</div>
 			</div>

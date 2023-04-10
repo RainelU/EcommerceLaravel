@@ -228,7 +228,7 @@ function getConfig($key){
 }
 
 function getPaymentsMethods($method = null){
-	$list = ['0' => 'Efectivo', '1' => 'Transferencia o deposito', '2' => 'Paypal', '3' => 'Tarjeta de crédito'];
+	$list = ['0' => 'Webpay'];
 	if(is_null($method)):
 		return $list;
 	else:

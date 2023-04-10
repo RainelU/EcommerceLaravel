@@ -47,6 +47,14 @@
 						{!! Form::number('days', $coverage->days, ['class' => 'form-control', 'min' => '0', 'step' => 'any']) !!}
 					</div>
 
+					<label for="name" class="mtop16">Precio estándar para envíos a esa zona:</label>
+					<div class="input-group">
+						<span class="input-group-text" id="basic-addon1">
+							<i class="far fa-keyboard"></i>
+						</span>
+						{!! Form::number('price', 0, ['class' => 'form-control', 'min' => '0', 'step' => 'any']) !!}
+					</div>
+
 					{!! Form::submit('Guardar', ['class' => 'btn btn-success mtop16']) !!}
 					{!! Form::close() !!}
 					

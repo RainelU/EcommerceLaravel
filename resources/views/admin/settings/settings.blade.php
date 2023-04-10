@@ -45,23 +45,6 @@
 						</span>
 						{!! Form::number('company_phone', Config::get('cms.company_phone'), ['class' => 'form-control']) !!}
 					</div>
-
-					<label for="email_from" class="mtop16">Correo electrónico remitente:</label>
-					<div class="input-group">
-						<span class="input-group-text" id="basic-addon1">
-							<i class="far fa-keyboard"></i>
-						</span>
-						{!! Form::email('email_from', Config::get('cms.email_from'), ['class' => 'form-control']) !!}
-					</div>
-
-					<label for="maintenance_mode" class="mtop16">Modo mantenimiento:</label>
-					<div class="input-group">
-						<span class="input-group-text" id="basic-addon1">
-							<i class="far fa-keyboard"></i>
-						</span>
-						{!! Form::select('maintenance_mode', ['0' => 'Desactivado', '1' => 'Activo'], Config::get('cms.maintenance_mode'), ['class' => 'form-select']) !!}
-					</div>
-
 				</div>
 			</div>
 		</div>
@@ -186,48 +169,6 @@
 		<div class="col-md-4 d-flex">
 			<div class="panel shadow">
 				<div class="header">
-					<h2 class="title"><i class="fas fa-wallet"></i> Pagos / Integraciones</h2>
-				</div>
-
-				<div class="inside">
-					<label for="payment_method_cash">Pagos en efectivo:</label>
-					<div class="input-group">
-						<span class="input-group-text" id="basic-addon1">
-							<i class="fas fa-cash-register"></i>
-						</span>
-						{!! Form::select('payment_method_cash', getEnableorNot(), Config::get('cms.payment_method_cash'), ['class' => 'form-select']) !!}
-					</div>
-
-					<label for="payment_method_transfer" class="mtop16">Transferencia / Deposito bancario:</label>
-					<div class="input-group">
-						<span class="input-group-text" id="basic-addon1">
-							<i class="fas fa-comment-dollar"></i>
-						</span>
-						{!! Form::select('payment_method_transfer', getEnableorNot(), Config::get('cms.payment_method_transfer'), ['class' => 'form-select']) !!}
-					</div>
-
-					<label for="payment_method_paypal" class="mtop16">Paypal:</label>
-					<div class="input-group">
-						<span class="input-group-text" id="basic-addon1">
-							<i class="fab fa-paypal"></i>
-						</span>
-						{!! Form::select('payment_method_paypal', getEnableorNot(), Config::get('cms.payment_method_paypal'), ['class' => 'form-select']) !!}
-					</div>
-
-					<label for="payment_method_credit_card" class="mtop16">Tarjeta de crédito:</label>
-					<div class="input-group">
-						<span class="input-group-text" id="basic-addon1">
-							<i class="fas fa-credit-card"></i>
-						</span>
-						{!! Form::select('payment_method_credit_card', getEnableorNot(), Config::get('cms.payment_method_credit_card'), ['class' => 'form-select']) !!}
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div class="col-md-4 d-flex">
-			<div class="panel shadow">
-				<div class="header">
 					<h2 class="title"><i class="far fa-file"></i> Paginación</h2>
 				</div>
 
@@ -246,42 +187,6 @@
 							<i class="far fa-keyboard"></i>
 						</span>
 						{!! Form::number('products_per_page_random', Config::get('cms.products_per_page_random'), ['class' => 'form-control', 'min' => 1, 'required']) !!}
-					</div>
-				</div>
-			</div>
-		</div>
-
-
-		<div class="col-md-4 d-flex">
-			<div class="panel shadow">
-				<div class="header">
-					<h2 class="title"><i class="fab fa-linux"></i> Servidor</h2>
-				</div>
-
-				<div class="inside">
-					<label for="server_uploads_paths">Uploads Server Path:</label>
-					<div class="input-group">
-						<span class="input-group-text" id="basic-addon1">
-							<i class="far fa-keyboard"></i>
-						</span>
-						{!! Form::text('server_uploads_paths', Config::get('cms.server_uploads_paths'), ['class' => 'form-control', 'required']) !!}
-					</div>
-
-					<label for="server_uploads_user_paths" class="mtop16">Uploads Server Users Path:</label>
-					<div class="input-group">
-						<span class="input-group-text" id="basic-addon1">
-							<i class="far fa-keyboard"></i>
-						</span>
-						{!! Form::text('server_uploads_user_paths', Config::get('cms.server_uploads_user_paths'), ['class' => 'form-control', 'required']) !!}
-					</div>
-
-
-					<label for="server_webapp_path" class="mtop16">Path webapp:</label>
-					<div class="input-group">
-						<span class="input-group-text" id="basic-addon1">
-							<i class="far fa-keyboard"></i>
-						</span>
-						{!! Form::text('server_webapp_path', Config::get('cms.server_webapp_path'), ['class' => 'form-control', 'required']) !!}
 					</div>
 				</div>
 			</div>

@@ -14,19 +14,18 @@
 				<!-- Featured Img & Gallery -->
 				<div class="col-md-4 pleft0">
 					<div class="slick-slider">
-						<div>
-							<a href="{{ url('/uploads/'.$product->file_path.'/'.$product->image) }}" data-fancybox="gallery">
-								<img src="{{ url('/uploads/'.$product->file_path.'/'.$product->image) }}" class="img-fluid">
-							</a>
-						</div>
 						@if(count($product->getGallery) > 0)
 							@foreach($product->getGallery as $gallery)
 								<div>
-									<a href="{{ url('/uploads/'.$gallery->file_path.'/t_'.$gallery->file_name) }}" data-fancybox="gallery">
-										<img src="{{ url('/uploads/'.$gallery->file_path.'/t_'.$gallery->file_name) }}" class="img-fluid">
-									</a>
+									<img src="{{ url('/uploads/'.$gallery->file_path.'/'.$gallery->file_name) }}" style="height: 300px; width: 100%;">
 								</div>
 							@endforeach
+						@else
+							<div>
+								<h3>
+									El producto no posee imágenes
+								</h3>
+							</div>
 						@endif
 					</div>
 				</div>
@@ -59,6 +58,11 @@
 									@else
 										<label class="text-danger"><i class="fa fa-wallet"></i> AGOTADO</label>
 									@endif
+								</div>
+								<div class="variants mtop16">
+									<h4>
+										PRECIO: <b>CLP {{ number_format($product->price, 0, '', '.') }}</b>
+									</h4>
 								</div>
 
 								<div class="variants hidden btop1 ptop16 mtop16" id="variants_div">
