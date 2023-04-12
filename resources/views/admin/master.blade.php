@@ -16,7 +16,8 @@
 	<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
 	<link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
 	<script src="https://kit.fontawesome.com/b0d8aefb17.js" crossorigin="anonymous"></script>
-
+	<link rel="stylesheet" href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+	<link rel="stylesheet" href="https://cdn.datatables.net/plug-ins/1.10.13/features/mark.js/datatables.mark.min.css">
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
  
@@ -25,6 +26,8 @@
 	<script src="{{ url('/static/js/mdalert.js') }}"></script>
 	<script src="{{ url('/static/js/admin.js?v='.time()) }}"></script>
 	<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+	<script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/g/mark.js(jquery.mark.min.js),datatables.mark.js"></script>
 
 	<script>
 		$(document).ready(function(){

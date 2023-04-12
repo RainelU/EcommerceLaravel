@@ -337,4 +337,30 @@ class ProductController extends Controller
         $product->price = $price;
         $product->save();
     }
+
+    public function getProductsMassivePriceChange(){
+        $products = Product::where('status', 1)->get();
+        return view('admin.products.massive_change', [
+            'products' => $products
+        ]);
+    }
+
+    public function postProductsMassivePriceChange(Request $request){
+        if(isset($request->arreglo_id)){
+            $parsed = explode(',', $request->arreglo_id[0]);
+            
+            foreach($parsed as $p){
+                $product = Product::where('id', $p)->first();
+
+                if($product){
+                    $product->price = $request['new_price_product_'.$p];
+                    $product->save();
+                }
+            }
+
+            return redirect('/admin/products/1')->with('message', 'Cambios de precios masivos realizados con éxito.')->with('typealert', 'success');
+        }
+        
+        return redirect('/admin/products/1')->with('message', 'Cambios de precios masivos no han sido realizados.')->with('typealert', 'danger');
+    }
 }

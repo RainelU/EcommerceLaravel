@@ -15,6 +15,9 @@
 			<h2 class="title"><i class="fas fa-boxes"></i> Productos</h2>
 			<ul>
 				<li>
+					<a href="{{ url('/admin/products/massive/change') }}"><i class="fas fa-refresh"></i> Cambiar precios masivamente</a>
+				</li>
+				<li>
 					<a href="{{ url('/admin/product/add') }}">
 						<i class="fas fa-plus"></i> Agregar producto
 					</a>

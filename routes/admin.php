@@ -30,7 +30,9 @@ Route::prefix('/admin')->group(function(){
  	Route::post('/product/{id}/inventory', 'Admin\ProductController@postProductInventory')->name('product_inventory');
  	Route::post('/product/{id}/gallery/add', 'Admin\ProductController@postProductGalleryAdd')->name('product_gallery_add');
  	Route::get('/product/{id}/gallery/{gid}/delete', 'Admin\ProductController@getProductGalleryDelete')->name('product_gallery_delete');
-
+	Route::get('/products/massive/change', [\App\Http\Controllers\Admin\ProductController::class, 'getProductsMassivePriceChange']);
+	Route::post('/products/massive/change', [\App\Http\Controllers\Admin\ProductController::class, 'postProductsMassivePriceChange'])->name("postMassiveChange");
+	
  	// Module Inventory
  	Route::get('/product/inventory/{id}/edit', 'Admin\ProductController@getProductInventoryEdit')->name('product_inventory');
  	Route::post('/product/inventory/{id}/edit', 'Admin\ProductController@postProductInventoryEdit')->name('product_inventory');

@@ -16,8 +16,8 @@ class DashboardController extends Controller
     public function getDashboard(){
     	$users = User::count();
     	$products = Product::where('status', '1')->count();
-		$ordenes = Order::select('total')->where('status', 2)->whereBetween('paid_at', [date('Y-m-d 00:00:00'), date('Y-m-d 23:59:59')])->get();
-		$ordenes_mes = Order::select('total')->where('status', 2)->whereBetween('paid_at', [date('Y-m-01 00:00:00'), date('Y-m-t 23:59:59')])->get();
+		$ordenes = Order::select('total')->whereNotIn('status', [0, 1, 100])->whereBetween('paid_at', [date('Y-m-d 00:00:00'), date('Y-m-d 23:59:59')])->get();
+		$ordenes_mes = Order::select('total')->whereNotIn('status', [0, 1, 100])->whereBetween('paid_at', [date('Y-m-01 00:00:00'), date('Y-m-t 23:59:59')])->get();
 		$cantidad_ordenes = count($ordenes);
 		$facturado_hoy = 0;
 		foreach($ordenes as $ord){

@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function(){
 			document.getElementById('form_product_gallery').submit();
 		});
 	}
-	route_active = document.getElementsByClassName('lk-'+route)[0].classList.add('active');
+	route_active = document.getElementsByClassName('lk-'+route).length > 0 ? document.getElementsByClassName('lk-'+route)[0].classList.add('active') : "";
 
 	btn_deleted = document.getElementsByClassName('btn-deleted');
 	for(i=0; i < btn_deleted.length; i++){
