@@ -144,11 +144,35 @@
 		</div>
 	@endif
 
-	<div class="wrapper">
+	<div class="wrapper" style="min-height: 100vh">
 		<div class="container">
 			@yield('content')
 		</div>
+	</div>
+	<nav class="navbar navbar-expand-lg shadow footer-clean">
+		<div class="container">
+			<a class="navbar-brand" href="{{ url('/') }}"><img src="{{ url('/static/images/bne_computers.png') }}"></a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigationMain" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<i class="fas fa-bars"></i>
+			</button>
 
+			<div class="collapse navbar-collapse" id="navigationMain">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item">
+						<a href="https://wa.me/+56988034292" class="nav-link lk-home">
+							<i class="fab fa-whatsapp"></i>
+							<span>+56 9 8803 4292</span>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="mailto:contacto@bnecomputers.cl" class="nav-link lk-store lk-store_category lk-product_single">
+							<i class="fab fa-email"></i> <span>contacto@bnecomputers.cl</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
 </body>
 <script>
 	@if(Session::has('messageToastr'))
