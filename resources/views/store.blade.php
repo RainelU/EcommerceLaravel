@@ -12,9 +12,6 @@
 					@foreach($categories as $category)
 					<li>
 						<a href="{{ url('/store/category/'.$category->id.'/'.$category->slug) }}">
-							{{-- @if($category->icono != NULL)
-								<img src="{{ getUrlFileFromUploads($category->icon) }}" alt="{{ $category->name }}">
-							@endif --}}
 							{{ $category->name }}
 						</a>
 					</li>

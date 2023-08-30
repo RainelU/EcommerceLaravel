@@ -8,11 +8,21 @@ use Illuminate\Http\Request;
 use Transbank\Webpay\WebpayPlus\Transaction;
 use App\Http\Models\Order, App\Http\Models\OrderItem, App\Http\Models\Product, App\Http\Models\Inventory, App\Http\Models\Variant, App\Http\Models\Coverage;
 use Exception;
+use Transbank\Webpay\WebpayPlus;
 
 class CartController extends Controller
 {
     public function __Construct(){
     	$this->middleware('auth');
+
+        if(app()->environment('production')){
+            WebpayPlus::configureForProduction(
+                env('WEBPAY_PLUS_CC'),
+                env('WEBPAY_PLUS_KEY_SECRET')
+            );
+        }else{
+            WebpayPlus::configureForTesting();
+        }
     }
 
     public function getCart(){

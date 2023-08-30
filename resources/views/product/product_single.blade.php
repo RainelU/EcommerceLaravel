@@ -17,7 +17,7 @@
 						@if(count($product->getGallery) > 0)
 							@foreach($product->getGallery as $gallery)
 								<div>
-									<img src="{{ url('/uploads/'.$gallery->file_path.'/'.$gallery->file_name) }}" style="height: 300px; width: 100%;">
+									<img src="{{ url('/uploads/'.$gallery->file_path.'/'.$gallery->file_name) }}" style="height: auto; max-width: 100%;">
 								</div>
 							@endforeach
 						@else
@@ -59,11 +59,29 @@
 										<label class="text-danger"><i class="fa fa-wallet"></i> AGOTADO</label>
 									@endif
 								</div>
-								<div class="variants mtop16">
-									<h4>
-										PRECIO: <b>CLP {{ number_format($product->price, 0, '', '.') }}</b>
-									</h4>
-								</div>
+								@if($product->in_discount)
+									<div class="variants mtop16">
+										<h4 style="color: #3e3e3e">
+											PRECIO ANTES: <b><del>CLP {{ number_format($product->price, 0, '', '.') }}</del></b>
+										</h4>
+									</div>
+									<div class="variants mtop16">
+										<h4>
+											DESCUENTO: <b>{{ number_format($product->discount, 0, '', '.') }}%</b>
+										</h4>
+									</div>
+									<div class="variants mtop16">
+										<h4>
+											PRECIO TOTAL: <b>CLP {{ number_format(($product->price - (($product->discount / 100) * $product->price)), 0, '', '.') }}</b>
+										</h4>
+									</div>
+								@else
+									<div class="variants mtop16">
+										<h4>
+											PRECIO NORMAL: <b>CLP {{ number_format($product->price, 0, '', '.') }}</b>
+										</h4>
+									</div>
+								@endif
 
 								<div class="variants hidden btop1 ptop16 mtop16" id="variants_div">
 									<p><strong>Más opciones del producto:</strong></p>

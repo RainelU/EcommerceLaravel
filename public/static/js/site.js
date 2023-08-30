@@ -151,7 +151,7 @@ function load_products(section){
 			data.forEach(function(product, index) {
 				products_list_ids_temp.push(product.id);
 				var div = "";
-				div += "<div class=\"product\">";
+				div += "<div class=\"product\" style=\"background: white\">";
 					div += "<div class=\"image\">"
 						div += "<div class=\"overlay\">";
 							div += "<div class=\"btns\">";
@@ -167,7 +167,7 @@ function load_products(section){
 							if(product.get_gallery.length > 0){
 								$.each(product.get_gallery, function (i, v) { 
 									div += `
-										<img src="${base + '/uploads/' + v.file_path + '/' + v.file_name}" style="width: 100%;height:150px;">
+										<img src="${base + '/uploads/' + v.file_path + '/' + v.file_name}" style="width: 100%;height:200px;object-fit:contain">
 									`
 								});
 							}
