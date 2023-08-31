@@ -173,8 +173,16 @@ function load_products(section){
 							}
 						div += "</div>";
 					div += "</div>";
+					if(product.in_discount){
+						div += `<span class="btn-sm btn-danger btn-block text-center">${product.discount}% de descuento</span>`;
+					}
 					div += "<a href=\""+base+"/product/"+product.id+"/"+product.slug+"\" title=\""+product.name+"\">";
 						div += "<div class=\"title\">"+product.name+"</div>";
+						if(product.in_discount){
+							div += `<div class="price" style="font-size: 15px;color: #3e3e3e">
+								${currency} <del>${new Intl.NumberFormat('es-CL').format(product.price)}</del>
+							</div>`;
+						}
 						div += `<div class="price">
 							${currency} ${product.in_discount ? new Intl.NumberFormat('es-CL').format(Math.round(product.price - ((product.discount / 100) * product.price))) : new Intl.NumberFormat('es-CL').format(product.price)}
 						</div>`;
@@ -196,6 +204,7 @@ function load_products(section){
 
 
 	}
+	$('.slick-slider').slick({dots: true, infinite: true, autoplay: true, autoplaySpeed: 2000});
 }
 
 function mark_user_favorites(objects){

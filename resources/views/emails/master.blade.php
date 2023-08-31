@@ -10,12 +10,13 @@
 <body style="margen: 0px; padding: 0px; background-color: #f3f3f3">
 
 	<div style="
-	display: block;
-	max-width: 728px;
-	margin: 0px auto;
-	width: 60%;
+		display: block;
+		max-width: 728px;
+		margin: 0px auto;
+		width: 60%;
+		text-align: center;
 	">
-		<img src="https://i.imgur.com/VxCUgdE.png" style="width: 100%; display: block;">
+		<img src="https://scontent.fscl17-1.fna.fbcdn.net/v/t39.30808-6/299487263_822585789126705_929119994237110373_n.png?_nc_cat=108&ccb=1-7&_nc_sid=a2f6c7&_nc_eui2=AeGvoveW-BuR29IPKBkmfsmeMVBFMGI03w0xUEUwYjTfDVDSXGVgU8gnCShzxPfbijoepIzWwSs9BMta6cvXTRH0&_nc_ohc=QtieZfuUxbQAX8APXfG&_nc_ht=scontent.fscl17-1.fna&oh=00_AfCJ7f17zLigybYkj57xMcK3Ab4vPP-ON0n6KG0IG3hFIg&oe=64F508D7">
 		
 		<div style="
 			background-color: #fff;
@@ -23,39 +24,6 @@
 		"
 		>
 			@yield('content')
-
-			<hr>
-
-			<div style="margin-top: 16px;">
-				<p><strong>Encuéntranos en nuestras redes sociales.</strong></p>
-				@if(config('cms.social_whatsapp') != "")
-				<a href="{{ config('cms.social_whatsapp') }}" target="_blank" style="display: inline-block; margin-right:  6px;">
-					<img src="{{ url('/static/images/whatsapp.png') }}" style="width: 36px; border-radius: 8px;">
-				</a>
-				@endif
-				@if(config('cms.social_facebook') != "")
-				<a href="{{ config('cms.social_facebook') }}" target="_blank" style="display: inline-block; margin-right:  6px;">
-					<img src="{{ url('/static/images/facebook.png') }}" style="width: 36px; border-radius: 8px;">
-				</a>
-				@endif
-				@if(config('cms.social_instagram') != "")
-				<a href="{{ config('cms.social_instagram') }}" target="_blank" style="display: inline-block; margin-right:  6px;">
-					<img src="{{ url('/static/images/instagram.png') }}" style="width: 36px; border-radius: 8px;">
-				</a>
-				@endif
-				@if(config('cms.social_twitter') != "")
-				<a href="{{ config('cms.social_twitter') }}" target="_blank" style="display: inline-block; margin-right:  6px;">
-					<img src="{{ url('/static/images/twitter.png') }}" style="width: 36px; border-radius: 8px;">
-				</a>
-				@endif
-				@if(config('cms.social_youtube') != "")
-				<a href="{{ config('cms.social_youtube') }}" target="_blank" style="display: inline-block; margin-right:  6px;">
-					<img src="{{ url('/static/images/youtube.png') }}" style="width: 36px; border-radius: 8px;">
-				</a>
-				@endif
-
-			</div>
-
 		</div>
 
 	</div>

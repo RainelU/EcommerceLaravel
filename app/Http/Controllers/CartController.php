@@ -7,7 +7,9 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Transbank\Webpay\WebpayPlus\Transaction;
 use App\Http\Models\Order, App\Http\Models\OrderItem, App\Http\Models\Product, App\Http\Models\Inventory, App\Http\Models\Variant, App\Http\Models\Coverage;
+use App\Models\User;
 use Exception;
+use Illuminate\Support\Facades\Mail;
 use Transbank\Webpay\WebpayPlus;
 
 class CartController extends Controller
@@ -98,8 +100,13 @@ class CartController extends Controller
                 if($compra->save()):
                     $orderItem = OrderItem::where('order_id', $compra->id)->get();
                     $oitem = $orderItem->toArray();
-                    
-    
+                    $user = User::where('id', Auth::id())->first();
+
+                    Mail::send('emails.order_paid', ['name' => $user->name, 'order' => $compra->id], function($msj) use ($user){
+                        $msj->from(env('MAIL_USERNAME'), "BNE COMPUTERS");
+                        $msj->subject("Recepción de pago BneComputers");
+                        $msj->to($user->email);
+                    });
                     foreach($oitem as $oi){
                         $product = Product::find($oi['product_id']);
     
@@ -118,6 +125,7 @@ class CartController extends Controller
             }
 
         }catch(Exception $e){
+            dd($e->getMessage());
             return redirect('/')->with('errorToastr', "El pago no ha sido procesado, realice nuevamente la compra.");
         }
     }
