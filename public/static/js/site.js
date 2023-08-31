@@ -175,7 +175,9 @@ function load_products(section){
 					div += "</div>";
 					div += "<a href=\""+base+"/product/"+product.id+"/"+product.slug+"\" title=\""+product.name+"\">";
 						div += "<div class=\"title\">"+product.name+"</div>";
-						div += "<div class=\"price\">"+currency+' '+ new Intl.NumberFormat('es-CL').format(product.price) +"</div>";
+						div += `<div class="price">
+							${currency} ${product.in_discount ? new Intl.NumberFormat('es-CL').format(Math.round(product.price - ((product.discount / 100) * product.price))) : new Intl.NumberFormat('es-CL').format(product.price)}
+						</div>`;
 						div += "<div class=\"options\"></div>";
 					div += "</a>"
 				div += "</div>";
