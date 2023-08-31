@@ -192,6 +192,7 @@ function load_products(section){
 				products_list.innerHTML += div;
 			});
 			$('.slick-slider').slick({dots: true, infinite: true, autoplay: true, autoplaySpeed: 2000});
+			$(".slick-slider").not('.slick-initialized').slick()
 
 			if(auth == "1"){
 				mark_user_favorites(products_list_ids_temp);
@@ -201,10 +202,7 @@ function load_products(section){
 		}else{
 			// Mensaje de error
 		}
-
-
 	}
-	$('.slick-slider').slick({dots: true, infinite: true, autoplay: true, autoplaySpeed: 2000});
 }
 
 function mark_user_favorites(objects){
